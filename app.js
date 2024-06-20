@@ -28,7 +28,7 @@ function addGo(e){
     const goDisplay=document.createElement("div");
     goDisplay.classList.add(go);
     e.target.append(goDisplay);
-    go = go === "circle" ? "cross" : "circle";//go  changes from circle to go
+    go = go === "circle" ? "cross" : "circle";//go  changes from circle to cross => Ternery
     //console.log(go)
     infod.textContent = "It is now " + go +"'s turn ➡️";
     e.target.removeEventListener("click",addGo);//Avoid OVERLAPPING of the cross or circle
