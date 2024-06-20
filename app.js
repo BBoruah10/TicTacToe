@@ -1,6 +1,6 @@
 const gameboard = document.getElementById("gameboard")
 const infod = document.querySelector("#info");
-infod.textContent="Cicle goes first";
+infod.textContent="Circle 🟢 goes first";
 const startCells=["","","","","","","","",""];
 let go="circle";
 
@@ -9,7 +9,7 @@ function createBoard(){
         const cellEle=document.createElement("div");
         cellEle.classList.add("square");
        // cellEle.innerHTML=index;
-      // const circleElement=document.createElement("div");
+      // const circleElement=document.createElement("div");//ALL for checking the display of cross/circle
       // circleElement.classList.add("circle");
       // const circleElement1=document.createElement("div");
       // circleElement1.classList.add("cross");
@@ -30,8 +30,8 @@ function addGo(e){
     e.target.append(goDisplay);
     go = go === "circle" ? "cross" : "circle";//go  changes from circle to go
     //console.log(go)
-    infod.textContent = "it is now" + go +"'s go";
-    e.target.removeEventListener("click",addGo);//upre upre nahe jate
+    infod.textContent = "It is now " + go +"'s turn ➡️";
+    e.target.removeEventListener("click",addGo);//Avoid OVERLAPPING of the cross or circle
     checkScore();
 }
 function checkScore(){
@@ -44,22 +44,35 @@ function checkScore(){
     ];
 
     winningCombos.forEach(array =>{
-        const circleWins=array.every(cell => allSquares[cell].firstChild?.classList.contains("circle"));
+        const circleWins=array.every(cell => allSquares[cell].firstChild?.classList.contains("circle"));//we are checking that the every first child is circle
         if(circleWins)
             {
-                infod.textContent="circle Wins";
+                infod.textContent="Circle 🟢 Wins";
                 //to stop the game after one wins--->remoave all event Losteners
                 allSquares.forEach(square=>square.replaceWith(square.cloneNode(true)))
+                playAgain();
             }
-    })//we are checcking that first child tu sob circle hoi ne nai
+    })
     winningCombos.forEach(array =>{
         const crossWins=array.every(cell => allSquares[cell].firstChild?.classList.contains("cross"));
         if(crossWins)
             {
-                infod.textContent="Cross Wins";
+                infod.textContent="Cross ❌ Wins";
 
                 allSquares.forEach(square=>square.replaceWith(square.cloneNode(true)))
+                playAgain();
             }
-    })//we are checcking that first child tu sob star hoi ne nai for eg 0->star ,1->star,2->star
+    })//we are checcking that first child is  star for all: for eg 0->star ,1->star,2->star
 
+}
+//play Again button
+function playAgain(){
+    const play=document.createElement("button");
+    play.setAttribute("class","playA");
+    play.innerText="Play Again ▶️";
+    infod.append(play);
+    play.addEventListener("click",()=>{
+        window.location.reload();//reloads
+    })
+    
 }
